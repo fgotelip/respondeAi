@@ -7,7 +7,9 @@ from bs4 import BeautifulSoup
 import webbrowser
 import os
 
+# caminho do executável do tesseract
 pytesseract.pytesseract.tesseract_cmd = r'C:\Program Files\Tesseract-OCR\tesseract.exe'
+
 
 def pega_ultimo_print(pasta):
     arquivos = [os.path.join(pasta, f) for f in os.listdir(pasta) if os.path.isfile(os.path.join(pasta, f))]
