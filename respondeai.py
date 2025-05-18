@@ -26,7 +26,8 @@ def extrair_texto_imagem(caminho):
         string_texto = ("\"\"\"" + texto + "\"\"\"")
         return texto
     except Exception as e:
-        return f"Erro ao processar imagem: {e}"
+        print(f"Erro ao processar imagem: {e}")
+        return None
     
 def pesquisa_google(questao):
     links = list(search(questao, num_results=10, lang="pt"))
@@ -34,6 +35,7 @@ def pesquisa_google(questao):
     filtro = [url for url in links if "respondeai" in url]
     if not filtro:
         print("Nenhum link correspondente encontrado.")
+        return None
     else:
         url = filtro[0]
 
@@ -73,8 +75,10 @@ caminho_ultimo_print = pega_ultimo_print(pasta_prints)
 
 questao_do_livro = extrair_texto_imagem(caminho_ultimo_print)
 
-html = pesquisa_google(questao_do_livro)
+if questao_do_livro != None:
+    html = pesquisa_google(questao_do_livro)
 
-tira_blur(html)
+    if html != None:
+        tira_blur(html)
 
-abrir_no_navegador()
+        abrir_no_navegador()
