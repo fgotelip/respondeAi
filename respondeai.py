@@ -30,23 +30,23 @@ def extrair_texto_imagem(caminho):
         return None
     
 def pesquisa_google(questao):
-    links = list(search(questao, num_results=10, lang="pt"))
+    # Adiciona filtro direto na consulta para priorizar resultados do site respondeai
+    query = f"{questao} site:respondeai.com.br"
 
-    filtro = [url for url in links if "respondeai" in url]
-    if not filtro:
-        print("Nenhum link correspondente encontrado.")
+    try:
+        for url in search(query, num_results=3, lang="pt"):
+            if "respondeai" in url:
+                try:
+                    resposta_pagina = requests.get(url, timeout=5)
+                    if resposta_pagina.status_code == 200:
+                        return resposta_pagina.text
+                except requests.exceptions.RequestException:
+                    continue
+        print("Nenhum link válido encontrado.")
         return None
-    else:
-        url = filtro[0]
-
-        resposta_pagina = requests.get(url)
-        
-        if resposta_pagina.status_code == 200:
-            html = resposta_pagina.text
-            return html
-
-        else:
-            print("Erro ao acessar a página:", resposta_pagina.status_code)
+    except Exception as e:
+        print(f"Erro na busca: {e}")
+        return None
 
 def tira_blur(html):
     soup = BeautifulSoup(html, 'html.parser')
