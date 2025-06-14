@@ -74,6 +74,8 @@ pasta_prints = "C:\\Users\\felip\\Pictures\\Screenshots"
 caminho_ultimo_print = pega_ultimo_print(pasta_prints)
 
 questao_do_livro = extrair_texto_imagem(caminho_ultimo_print)
+with open('questao.txt', 'w', encoding='utf-8') as f:
+    f.write(questao_do_livro)
 
 if questao_do_livro != None:
     html = pesquisa_google(questao_do_livro)
