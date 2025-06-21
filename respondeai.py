@@ -77,6 +77,7 @@ caminho_ultimo_print = pega_ultimo_print(pasta_prints)
 
 questao_do_livro = extrair_texto_imagem(caminho_ultimo_print)
 
+
 if questao_do_livro != None:
     html = pesquisa_google(questao_do_livro)
 
@@ -84,3 +85,10 @@ if questao_do_livro != None:
         tira_blur(html)
 
         abrir_no_navegador()
+
+# modo manual caso não encontre a questão automaticamente
+# url = '''https://www.respondeai.com.br/conteudo/fen-trans-mec-flu-trans-cal-e-trans-massa/livro/exercicios/placa-retangular-bidimensional-submetida-condicoes-contorno-temperatura-especificada-tres-lados-75583'''
+# resposta_pagina = requests.get(url, timeout=5)
+# html = resposta_pagina.text
+# tira_blur(html)
+# abrir_no_navegador()
