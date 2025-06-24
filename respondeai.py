@@ -44,8 +44,14 @@ def pesquisa_google(questao):
                         return resposta_pagina.text
                 except requests.exceptions.RequestException:
                     continue
-        print("Nenhum link válido encontrado.")
-        return None
+        url = input("Não encontrei a questão automaticamente. Por favor, cole a URL do site RespondeAí: ")
+        try:
+                    resposta_pagina = requests.get(url, timeout=5)
+                    if resposta_pagina.status_code == 200:
+                        return resposta_pagina.text
+        except requests.exceptions.RequestException:
+            print("Erro ao acessar a URL fornecida. Verifique se está correta.")
+            return None
     except Exception as e:
         print(f"Erro na busca: {e}")
         return None
@@ -86,9 +92,4 @@ if questao_do_livro != None:
 
         abrir_no_navegador()
 
-# modo manual caso não encontre a questão automaticamente
-# url = '''https://www.respondeai.com.br/conteudo/fen-trans-mec-flu-trans-cal-e-trans-massa/livro/exercicios/placa-retangular-bidimensional-submetida-condicoes-contorno-temperatura-especificada-tres-lados-75583'''
-# resposta_pagina = requests.get(url, timeout=5)
-# html = resposta_pagina.text
-# tira_blur(html)
-# abrir_no_navegador()
+
