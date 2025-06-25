@@ -77,7 +77,7 @@ def abrir_no_navegador():
 
 
 # Caminho da pasta onde estão os print
-pasta_prints = "C:\\Users\\felip\\Pictures\\Screenshots"
+pasta_prints = "C:\Users\felipe.delgado\Documents\Projetos\ProjetosPython\projeto\teste"
 
 caminho_ultimo_print = pega_ultimo_print(pasta_prints)
 
@@ -93,3 +93,7 @@ if questao_do_livro != None:
         abrir_no_navegador()
 
 
+# def arquivos_mais_recentes(pasta, quantidade=5):
+#     arquivos = [os.path.join(pasta, f) for f in os.listdir(pasta) if os.path.isfile(os.path.join(pasta, f))]
+#     arquivos.sort(key=lambda x: os.path.getmtime(x), reverse=True)
+#     return arquivos[:quantidade]
