@@ -77,7 +77,7 @@ def abrir_no_navegador():
 
 
 # Caminho da pasta onde estão os print
-pasta_prints = "C:\Users\felipe.delgado\Documents\Projetos\ProjetosPython\projeto\teste"
+pasta_prints = "C:\\Users\\felip\\Pictures\\Screenshots"
 
 caminho_ultimo_print = pega_ultimo_print(pasta_prints)
 
