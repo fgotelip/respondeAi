@@ -94,9 +94,7 @@ pasta_prints = "C:\\Users\\felip\\Pictures\\Screenshots"
 # questoes = [int(q.strip()) for q in questoes if q.strip().isdigit()]
 
 quantidade = 12
-# arquivos = reversed(arquivos_mais_recentes(pasta_prints, quantidade))
-arquivos = (arquivos_mais_recentes(pasta_prints, quantidade))
-
+arquivos = reversed(arquivos_mais_recentes(pasta_prints, quantidade))
 
 capitulo = 6
 questoes = [4, 5, 6, 7, 8, 9, 10, 11, 13, 1, 2, 3]
