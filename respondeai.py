@@ -15,6 +15,7 @@ def arquivos_mais_recentes(pasta, quantidade):
     arquivos.sort(key=lambda x: os.path.getmtime(x), reverse=True)
     return arquivos[:quantidade]
 
+
 def extrair_texto_imagem(caminho):
     try:
         imagem = Image.open(caminho)
@@ -27,6 +28,7 @@ def extrair_texto_imagem(caminho):
         print(f"Erro ao processar imagem: {e}")
         return None
     
+
 def pesquisa_google(questao):
     # Adiciona filtro direto na consulta para priorizar resultados do site respondeai
     query = f"{questao} site:respondeai.com.br"
@@ -51,6 +53,7 @@ def pesquisa_google(questao):
     except Exception as e:
         print(f"Erro na busca: {e}")
         return None
+
 
 def tira_blur(html,capitulo,questao):
     soup = BeautifulSoup(html, 'html.parser')
