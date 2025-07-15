@@ -1,3 +1,4 @@
+from shlex import split
 from PIL import Image
 import pytesseract
 import os
@@ -89,14 +90,17 @@ pasta_prints = "C:\\Users\\felip\\Pictures\\Screenshots"
 
 # quantidade = int(input("Quantas questões você quer pesquisar? "))
 # capitulo = int(input("Qual o capítulo? "))
-# questao = int(input("Qual a primeira questão que você tirou print? "))
+# questoes = split(input("Digite as questões separadas por vírgula (ex: 1,2,3): "))
+# questoes = [int(q.strip()) for q in questoes if q.strip().isdigit()]
 
 quantidade = 12
-arquivos = reversed(arquivos_mais_recentes(pasta_prints, quantidade))
+# arquivos = reversed(arquivos_mais_recentes(pasta_prints, quantidade))
+arquivos = (arquivos_mais_recentes(pasta_prints, quantidade))
 
 
 capitulo = 6
-questao = 1
+questoes = [4, 5, 6, 7, 8, 9, 10, 11, 13, 1, 2, 3]
+i = 0
 for caminho_ultimo_print in arquivos:
     questao_do_livro = extrair_texto_imagem(caminho_ultimo_print)
 
@@ -104,10 +108,8 @@ for caminho_ultimo_print in arquivos:
         html = pesquisa_google(questao_do_livro)
 
         if html != None:
-            tira_blur(html, capitulo, questao)
-            
+            tira_blur(html, capitulo, questoes[i])
+
             abrir_no_navegador()
-        questao += 1
-
-
+        i += 1
 
