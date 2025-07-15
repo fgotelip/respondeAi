@@ -1,0 +1,13 @@
+"""Em uma aplicação específica que envolve o escoamento de ar
+sobre uma superíície aquecida, a distribuição de temperaturas
+ma camada-limite pode ser aproximada por
+
+TE u pçtoo
+
+eA up( PS
+onde y é a distância normal à superfície e o mímero de Prandtl,
+Pr = cyuk = 0,7, é uma propriedade adimensional do fluido.
+Sendo T. = 400 K, T, = 300 K e ufv = 5000 m1, qual é o
+fluxo térmico na superfície?
+
+"""

@@ -60,9 +60,15 @@ def tira_blur(html,capitulo,questao):
     # Remover todas as tags <style>
     for tag in soup.find_all('style'):
         tag.decompose()
+
+    # Título da página
+    soup.title.string = (f"{capitulo}.{questao}")
+
+    # Título da questão
     h1_tag = soup.new_tag('h1')
     h1_tag.string = (f"{capitulo}.{questao}")
     soup.body.insert(0, h1_tag)
+
 
     with open('resposta.html', 'w', encoding='utf-8') as f:
         f.write(soup.prettify())
@@ -87,6 +93,7 @@ pasta_prints = "C:\\Users\\felip\\Pictures\\Screenshots"
 
 quantidade = 12
 arquivos = reversed(arquivos_mais_recentes(pasta_prints, quantidade))
+
 
 capitulo = 6
 questao = 1
