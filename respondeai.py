@@ -42,14 +42,19 @@ def pesquisa_google(questao):
                     if resposta_pagina.status_code == 200:
                         return resposta_pagina.text
                 except requests.exceptions.RequestException:
-                    continue
+                    print("Erro ao acessar a URL fornecida. Verifique se está correta.")
+                    return None
         url = input("Não encontrei a questão automaticamente. Por favor, cole a URL do site RespondeAí: ")
-        try:
-                    resposta_pagina = requests.get(url, timeout=5)
-                    if resposta_pagina.status_code == 200:
-                        return resposta_pagina.text
-        except requests.exceptions.RequestException:
-            print("Erro ao acessar a URL fornecida. Verifique se está correta.")
+        if "respondeai" in url:
+            try:
+                resposta_pagina = requests.get(url, timeout=5)
+                if resposta_pagina.status_code == 200:
+                    return resposta_pagina.text
+            except requests.exceptions.RequestException:
+                print("Erro ao acessar a URL fornecida. Verifique se está correta.")
+                return None
+        else:
+            print("A URL fornecida não é do site RespondeAí.")
             return None
     except Exception as e:
         print(f"Erro na busca: {e}")
