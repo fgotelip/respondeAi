@@ -10,14 +10,10 @@ import os
 # caminho do executável do tesseract
 pytesseract.pytesseract.tesseract_cmd = r'C:\Program Files\Tesseract-OCR\tesseract.exe'
 
-
-def pega_ultimo_print(pasta):
+def arquivos_mais_recentes(pasta, quantidade):
     arquivos = [os.path.join(pasta, f) for f in os.listdir(pasta) if os.path.isfile(os.path.join(pasta, f))]
-
-    # Verifica qual tem a data de modificação mais recente
-    caminho_ultimo_print = max(arquivos, key=os.path.getmtime)
-    
-    return caminho_ultimo_print
+    arquivos.sort(key=lambda x: os.path.getmtime(x), reverse=True)
+    return arquivos[:quantidade]
 
 def extrair_texto_imagem(caminho):
     try:
@@ -56,11 +52,14 @@ def pesquisa_google(questao):
         print(f"Erro na busca: {e}")
         return None
 
-def tira_blur(html):
+def tira_blur(html,capitulo,questao):
     soup = BeautifulSoup(html, 'html.parser')
     # Remover todas as tags <style>
     for tag in soup.find_all('style'):
         tag.decompose()
+    h1_tag = soup.new_tag('h1')
+    h1_tag.string = (f"{capitulo}.{questao}")
+    soup.body.insert(0, h1_tag)
 
     with open('resposta.html', 'w', encoding='utf-8') as f:
         f.write(soup.prettify())
@@ -79,21 +78,26 @@ def abrir_no_navegador():
 # Caminho da pasta onde estão os print
 pasta_prints = "C:\\Users\\felip\\Pictures\\Screenshots"
 
-caminho_ultimo_print = pega_ultimo_print(pasta_prints)
+# quantidade = int(input("Quantas questões você quer pesquisar? "))
+# capitulo = int(input("Qual o capítulo? "))
+# questao = int(input("Qual a primeira questão que você tirou print? "))
 
-questao_do_livro = extrair_texto_imagem(caminho_ultimo_print)
+quantidade = 12
+arquivos = reversed(arquivos_mais_recentes(pasta_prints, quantidade))
+
+capitulo = 6
+questao = 1
+for caminho_ultimo_print in arquivos:
+    questao_do_livro = extrair_texto_imagem(caminho_ultimo_print)
+
+    if questao_do_livro != None:
+        html = pesquisa_google(questao_do_livro)
+
+        if html != None:
+            tira_blur(html, capitulo, questao)
+            
+            abrir_no_navegador()
+        questao += 1
 
 
-if questao_do_livro != None:
-    html = pesquisa_google(questao_do_livro)
 
-    if html != None:
-        tira_blur(html)
-
-        abrir_no_navegador()
-
-
-# def arquivos_mais_recentes(pasta, quantidade=5):
-#     arquivos = [os.path.join(pasta, f) for f in os.listdir(pasta) if os.path.isfile(os.path.join(pasta, f))]
-#     arquivos.sort(key=lambda x: os.path.getmtime(x), reverse=True)
-#     return arquivos[:quantidade]
