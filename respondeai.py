@@ -7,6 +7,7 @@ import requests
 from bs4 import BeautifulSoup
 import webbrowser
 import os
+from pathlib import Path
 
 # caminho do executável do tesseract
 pytesseract.pytesseract.tesseract_cmd = r'C:\Program Files\Tesseract-OCR\tesseract.exe'
@@ -75,14 +76,17 @@ def tira_blur(html,capitulo,questao):
     h1_tag.string = (f"{capitulo}.{questao}")
     soup.body.insert(0, h1_tag)
 
+    pasta = Path(f"respostas/{capitulo}")
+    pasta.mkdir(parents=True, exist_ok=True)
 
-    with open('resposta.html', 'w', encoding='utf-8') as f:
-        f.write(soup.prettify())
+    arquivo = Path(f"respostas/{capitulo}/{capitulo}.{questao}.html")
+
+    arquivo.write_text(soup.prettify(), encoding='utf-8')
 
 
-def abrir_no_navegador():
+def abrir_no_navegador(capitulo, questao):
     # Caminho absoluto do arquivo HTML gerado
-    caminho = os.path.abspath("resposta.html")
+    caminho = os.path.abspath(os.path.join(f"respostas/{capitulo}", f'{capitulo}.{questao}.html'))
 
     # Abrir no navegador padrão (Chrome, Edge, etc.)
     webbrowser.open(f"file://{caminho}")
@@ -99,7 +103,8 @@ pasta_prints = "C:\\Users\\felip\\Pictures\\Screenshots"
 # questoes = [int(q.strip()) for q in questoes if q.strip().isdigit()]
 
 capitulo = 6
-questoes = [4,6,15,17,20,22,25,27,32,37]
+# questoes = [4,6,15,17,20,22,25,27,32,37]
+questoes = [1,2,3]
 quantidade = len(questoes)
 arquivos = reversed(arquivos_mais_recentes(pasta_prints, quantidade))
 
@@ -115,6 +120,6 @@ for caminho_ultimo_print in arquivos:
         if html != None:
             tira_blur(html, capitulo, questoes[i])
 
-            abrir_no_navegador() 
+            # abrir_no_navegador(capitulo, questoes[i])
         i += 1
 

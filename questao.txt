@@ -1,13 +1,10 @@
-"""Em uma aplicação específica que envolve o escoamento de ar
-sobre uma superíície aquecida, a distribuição de temperaturas
-ma camada-limite pode ser aproximada por
+"""3) Um trocador de calor de cascos e tubos, com dois passes no casco e quatro passes nos tubos, é usado para
+aquecer glicerina entre 20 ºC e 50 ºC, com água quente que entra a 80 ºC nos tubos de parede fina de 2 cm
+de diâmetro e os deixa a 40 ºC. O comprimento total dos tubos é de 60 m, o coeficiente de transferência de
+calor por convecção é de 25 W/mºK no lado da glicerina e 160 W/m?K no lado da água. Determine a txa de
+transferência de calor no trocador de calor, se:
 
-TE u pçtoo
-
-eA up( PS
-onde y é a distância normal à superfície e o mímero de Prandtl,
-Pr = cyuk = 0,7, é uma propriedade adimensional do fluido.
-Sendo T. = 400 K, T, = 300 K e ufv = 5000 m1, qual é o
-fluxo térmico na superfície?
+a) Ainda não existe nenhuma incrustação
+b) Depois que uma incrustação com fator de 0,0006 m?K/W ocorre sobre a superfície externa dos tubos.
 
 """
