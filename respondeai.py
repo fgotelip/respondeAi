@@ -31,22 +31,24 @@ def extrair_texto_imagem(caminho):
         return None
     
 
-def pesquisa_google(questao):
+def procura_texto_google(questao):
     # Adiciona filtro direto na consulta para priorizar resultados do site respondeai
     query = f"{questao} site:respondeai.com.br"
 
     try:
         for url in search(query, num_results=3, lang="pt"):
             if "respondeai" in url:
-                try:
-                    resposta_pagina = requests.get(url, timeout=5)
-                    if resposta_pagina.status_code == 200:
-                        return resposta_pagina.text
-                except requests.exceptions.RequestException:
-                    print("Erro ao acessar a URL fornecida. Verifique se está correta.")
-                    return None
+                return url
         url = input("Não encontrei a questão automaticamente. Por favor, cole a URL do site RespondeAí: ")
-        if "respondeai" in url:
+        return url
+
+    except Exception as e:
+        print(f"Erro na busca: {e}")
+        return None
+
+
+def extrair_html(url):
+        if "respondeai" in url:    
             try:
                 resposta_pagina = requests.get(url, timeout=5)
                 if resposta_pagina.status_code == 200:
@@ -57,9 +59,6 @@ def pesquisa_google(questao):
         else:
             print("A URL fornecida não é do site RespondeAí.")
             return None
-    except Exception as e:
-        print(f"Erro na busca: {e}")
-        return None
 
 
 def tira_blur(html,capitulo,questao):
@@ -92,34 +91,45 @@ def abrir_no_navegador(capitulo, questao):
     webbrowser.open(f"file://{caminho}")
 
 
+def varias_questoes(capitulo, questoes,pasta_prints):
+    quantidade = len(questoes)
+    arquivos = reversed(arquivos_mais_recentes(pasta_prints, quantidade))
+    i = 0
+    for caminho_ultimo_print in arquivos:
+        questao_do_livro = extrair_texto_imagem(caminho_ultimo_print)
+
+        if questao_do_livro != None:
+
+            url = procura_texto_google(questao_do_livro)
+            html = extrair_html(url)
+
+            if html != None:
+                tira_blur(html, capitulo, questoes[i])
+
+                abrir_no_navegador(capitulo, questoes[i])
+            i += 1
+
+def questao_por_link(link, capitulo, questao):
+    html = extrair_html(link)
+    if html != None:
+        tira_blur(html, capitulo, questao)
+
+def questao_por_texto(texto, capitulo, questao):
+    url = procura_texto_google(texto)
+    html = extrair_html(url)
+    if html != None:
+        tira_blur(html, capitulo, questao)
 
 
 # Caminho da pasta onde estão os print
 pasta_prints = "C:\\Users\\felip\\Pictures\\Screenshots"
 
-# quantidade = int(input("Quantas questões você quer pesquisar? "))
-# capitulo = int(input("Qual o capítulo? "))
-# questoes = split(input("Digite as questões separadas por vírgula (ex: 1,2,3): "))
-# questoes = [int(q.strip()) for q in questoes if q.strip().isdigit()]
 
-capitulo = 6
-# questoes = [4,6,15,17,20,22,25,27,32,37]
-questoes = [1,2,3]
-quantidade = len(questoes)
-arquivos = reversed(arquivos_mais_recentes(pasta_prints, quantidade))
+capitulo = "11"
+questoes = [48]
+link = "https://respondeai.com.br/questoes/11-48/"
+texto = "Qual é a capital da França?"
 
-  # Exemplo de questões
-#14,16,15,17
-i = 0
-for caminho_ultimo_print in arquivos:
-    questao_do_livro = extrair_texto_imagem(caminho_ultimo_print)
-
-    if questao_do_livro != None:
-        html = pesquisa_google(questao_do_livro)
-
-        if html != None:
-            tira_blur(html, capitulo, questoes[i])
-
-            # abrir_no_navegador(capitulo, questoes[i])
-        i += 1
-
+varias_questoes(capitulo, questoes, pasta_prints)
+questao_por_link(link, capitulo, questoes[0])
+questao_por_texto(texto, capitulo, questoes[0])
