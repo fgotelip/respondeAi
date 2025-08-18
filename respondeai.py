@@ -122,25 +122,20 @@ def questao_por_texto(texto, capitulo, questao):
         tira_blur(html, capitulo, questao)
         abrir_no_navegador(capitulo, questao)
 
+def extrair_texto_ultimo_print(pasta_prints):
+    arquivo = arquivos_mais_recentes(pasta_prints, 1)
+    return extrair_texto_imagem(arquivo[0]) 
+
 # Caminho da pasta onde estão os print
 pasta_prints = "C:\\Users\\felip\\Pictures\\Screenshots"
 
 
-capitulo = "Preparativo TVC2"
-questoes = [1]
-link = "https://respondeai.com.br/questoes/11-48/"
-texto = """Numa indústria deseja-se projetar um dissipador de calor para elementos
-transistores em um local onde o coeficiente de transferência de calor por
-convecção é 3 Kcal/h.m2.°C. A base do dissipador será uma placa plana, de 10
-cm x 10 cm, sobre a qual estarão dispostas 8 aletas, de seção transversal
-retangular, com espaçamento constante, de 2 mm de espessura e 40 mm de
-altura. Sob a placa deve ser mantida uma temperatura de 80 °C, com
-temperatura ambiente de 30 °C. Considerando a condutividade térmica das
-aletas igual a 35 Kcal/h.m.°C, pede-se:
-a) (15 pontos) a eficiência da aleta;
-b) (15 pontos) calor dissipado pela placa aletada;
-DADO : 1 KW = 860 kcal/h"""
+capitulo = "7"
+questoes = ["20"]
+link = "https://www.respondeai.com.br/conteudo/exercicios-ia/grande-empresa-mineradora-precisa-transportar-oleo-combustivel-setor-outro-mantendo-7-99310"
+texto = """exemplo"""
 
-# varias_questoes(capitulo, questoes, pasta_prints)
+varias_questoes(capitulo, questoes, pasta_prints)
 # questao_por_link(link, capitulo, questoes[0])
-questao_por_texto(texto, capitulo, questoes[0])
+# questao_por_texto(texto, capitulo, questoes[0])
+# extrair_texto_ultimo_print(pasta_prints)
